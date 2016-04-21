@@ -2,9 +2,7 @@
 # coding: utf-8
 #############################################
 urls=[
-  "http://news.google.com/news?hl=ja&ned=us&ie=UTF-8&oe=UTF-8&output=rss",
   "http://rss.dailynews.yahoo.co.jp/fc/domestic/rss.xml",
-  "http://sankei.jp.msn.com/rss/news/points.xml",
 ]
 token = ENV["TOKEN"] || (print "Token: "; gets.strip)
 #############################################
@@ -26,10 +24,6 @@ unless ActiveRecord::Base.connection.table_exists? :rsssites
   end
 end
 class Rsssites < ActiveRecord::Base
-end
-
-Mail.defaults do
-  delivery_method :sendmail
 end
 
 urls.each do |url|
