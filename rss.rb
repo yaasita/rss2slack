@@ -2,7 +2,7 @@
 # coding: utf-8
 #############################################
 urls=[
-  "http://rss.dailynews.yahoo.co.jp/fc/domestic/rss.xml",
+  "https://www.w3.org/blog/feed",
 ]
 token = ENV["TOKEN"] || (print "Token: "; gets.strip)
 #############################################
