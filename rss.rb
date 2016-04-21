@@ -6,12 +6,13 @@ urls=[
   "http://rss.dailynews.yahoo.co.jp/fc/domestic/rss.xml",
   "http://sankei.jp.msn.com/rss/news/points.xml",
 ]
+token = ENV["TOKEN"] || (print "Token: "; gets.strip)
 #############################################
 
 require 'rss'
 require 'active_record'
 require 'nokogiri'
-require 'mail'
+require 'slack'
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
@@ -55,14 +56,8 @@ urls.each do |url|
     else
       db.last_get_date = item.pubDate.to_s
     end
-    mail = Mail.new do
-      from  'rss@example.com'
-      to    'rss@example.com'
-    end
-    mail.charset ='utf-8'
-    mail.subject = item.title
-    mail.body  = item.link + "\n\n\n" + Nokogiri::HTML(item.description).text
-    mail.deliver
+    client = Slack::Client.new token: token
+    client.chat_postMessage(channel: "hoge", text: "#{item.link}\n\n\n#{Nokogiri::HTML(item.description).text}", as_user: true)
   end
   db.save
 end
