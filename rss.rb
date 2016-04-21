@@ -51,7 +51,7 @@ urls.each do |url|
       db.last_get_date = item.pubDate.to_s
     end
     client = Slack::Client.new token: token
-    client.chat_postMessage(channel: "hoge", text: "#{item.link}\n\n\n#{Nokogiri::HTML(item.description).text}", as_user: true)
+    client.chat_postMessage(channel: "hoge", text: "#{item.link}}", as_user: true)
   end
   db.save
 end
